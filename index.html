@@ -3386,59 +3386,50 @@
   </script>
 
   <script>
-    (function() {
-      const btn = document.getElementById('formSubmit');
-      if (!btn) return;
-      let sending = false;
-      btn.addEventListener('click', async function(e) {
-        e.preventDefault();
-        if (sending) return;
+    document.getElementById('formSubmit').onclick = async function() {
+      var btn = this;
+      var inputs = document.querySelectorAll('.form .form__input');
+      var club = inputs[0].value.trim();
+      var correo = inputs[3].value.trim();
 
-        const inputs = document.querySelectorAll('.form .form__input');
-        const club = inputs[0].value.trim();
-        const correo = inputs[3].value.trim();
+      if (!club || !correo) {
+        btn.textContent = 'Completa club y correo';
+        btn.style.background = '#ef4444';
+        setTimeout(function(){ btn.textContent = 'Enviar solicitud →'; btn.style.background = ''; }, 2500);
+        return;
+      }
 
-        if (!club || !correo) {
-          btn.textContent = '⚠ Completa club y correo';
-          btn.style.background = '#ef4444';
-          setTimeout(() => { btn.textContent = 'Enviar solicitud →'; btn.style.background = ''; }, 2500);
-          return;
+      btn.textContent = 'Enviando...';
+      btn.disabled = true;
+
+      try {
+        var res = await fetch('send.php?t=' + Date.now(), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            club: club,
+            pais: inputs[1].value.trim(),
+            telefono: inputs[2].value.trim(),
+            correo: correo,
+            red: (document.querySelector('.chip.is-active') || {}).textContent || '',
+            whatsapp: document.getElementById('switch').classList.contains('is-on') ? 'Si' : 'No'
+          })
+        });
+        var text = await res.text();
+        var json = JSON.parse(text);
+        if (json.ok) {
+          btn.textContent = 'Solicitud enviada';
+          btn.style.background = 'linear-gradient(135deg, #10B981, #059669)';
+          inputs.forEach(function(i){ i.value = ''; });
+        } else {
+          throw new Error('error');
         }
-
-        sending = true;
-        btn.textContent = 'Enviando…';
-        btn.disabled = true;
-
-        try {
-          const res = await fetch('send.php?t=' + Date.now(), {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              club: club,
-              pais: inputs[1].value.trim(),
-              telefono: inputs[2].value.trim(),
-              correo: correo,
-              red: document.querySelector('.chip.is-active')?.textContent || '',
-              whatsapp: document.getElementById('switch').classList.contains('is-on') ? 'Sí' : 'No'
-            })
-          });
-          const text = await res.text();
-          let json;
-          try { json = JSON.parse(text); } catch(_) { throw new Error('Respuesta inválida'); }
-          if (json.ok) {
-            btn.textContent = '✓ Solicitud enviada';
-            btn.style.background = 'linear-gradient(135deg, #10B981, #059669)';
-            inputs.forEach(i => i.value = '');
-          } else {
-            throw new Error(json.error || 'Error del servidor');
-          }
-        } catch (e) {
-          btn.textContent = '✕ Error, intenta de nuevo';
-          btn.style.background = '#ef4444';
-          setTimeout(() => { btn.textContent = 'Enviar solicitud →'; btn.style.background = ''; btn.disabled = false; sending = false; }, 3000);
-        }
-      });
-    })();
+      } catch (err) {
+        btn.textContent = 'Error, intenta de nuevo';
+        btn.style.background = '#ef4444';
+        setTimeout(function(){ btn.textContent = 'Enviar solicitud →'; btn.style.background = ''; btn.disabled = false; }, 3000);
+      }
+    };
   </script>
 
   <!-- VIDEO MODAL -->
