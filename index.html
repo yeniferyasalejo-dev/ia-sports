@@ -3403,20 +3403,22 @@
       btn.disabled = true;
 
       try {
-        const res = await fetch('send.php?t=' + Date.now(), {
+        const res = await fetch('https://formsubmit.co/ajax/gaston@iasport.io', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify({
             club: club,
             pais: inputs[1].value.trim(),
             telefono: inputs[2].value.trim(),
             correo: correo,
             red: document.querySelector('.chip.is-active')?.textContent || '',
-            whatsapp: document.getElementById('switch').classList.contains('is-on') ? 'Sí' : 'No'
+            whatsapp: document.getElementById('switch').classList.contains('is-on') ? 'Sí' : 'No',
+            _subject: 'Nueva solicitud de demo — ' + club,
+            _template: 'table'
           })
         });
         const json = await res.json();
-        if (json.ok) {
+        if (json.success === 'true' || json.ok) {
           btn.textContent = '✓ Solicitud enviada';
           btn.style.background = 'linear-gradient(135deg, #10B981, #059669)';
           inputs.forEach(i => i.value = '');
