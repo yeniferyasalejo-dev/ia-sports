@@ -42,7 +42,7 @@ Canal WhatsApp: $whatsapp
 Enviado desde iasport.io
 ";
 
-$headers  = "From: IA Sport <noreply@iasport.io>\r\n";
+$headers  = "From: IA Sport <vendsysselweb@gmail.com>\r\n";
 $headers .= "Reply-To: $correo\r\n";
 $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
