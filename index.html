@@ -3177,7 +3177,7 @@
                 <span style="color: var(--paper); font-size: 14px;">Sí</span>
               </div>
             </div>
-            <button type="button" class="btn btn--primary form__cta">Enviar solicitud →</button>
+            <button type="button" class="btn btn--primary form__cta" id="formSubmit">Enviar solicitud →</button>
           </div>
         </div>
       </div>
@@ -3382,6 +3382,52 @@
         item.classList.toggle('is-open');
         trigger.setAttribute('aria-expanded', !isOpen);
       });
+    });
+  </script>
+
+  <script>
+    document.getElementById('formSubmit').addEventListener('click', async function() {
+      const btn = this;
+      const inputs = document.querySelectorAll('.form .form__input');
+      const club = inputs[0].value.trim();
+      const correo = inputs[3].value.trim();
+
+      if (!club || !correo) {
+        btn.textContent = '⚠ Completa club y correo';
+        btn.style.background = '#ef4444';
+        setTimeout(() => { btn.textContent = 'Enviar solicitud →'; btn.style.background = ''; }, 2500);
+        return;
+      }
+
+      btn.textContent = 'Enviando…';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch('send.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            club: club,
+            pais: inputs[1].value.trim(),
+            telefono: inputs[2].value.trim(),
+            correo: correo,
+            red: document.querySelector('.chip.is-active')?.textContent || '',
+            whatsapp: document.getElementById('switch').classList.contains('is-on') ? 'Sí' : 'No'
+          })
+        });
+        const json = await res.json();
+        if (json.ok) {
+          btn.textContent = '✓ Solicitud enviada';
+          btn.style.background = 'linear-gradient(135deg, #10B981, #059669)';
+          inputs.forEach(i => i.value = '');
+        } else {
+          throw new Error(json.error || 'Error');
+        }
+      } catch (e) {
+        btn.textContent = '✕ Error, intenta de nuevo';
+        btn.style.background = '#ef4444';
+        setTimeout(() => { btn.textContent = 'Enviar solicitud →'; btn.style.background = ''; btn.disabled = false; }, 3000);
+      }
     });
   </script>
 
