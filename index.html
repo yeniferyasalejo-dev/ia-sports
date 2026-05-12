@@ -2467,7 +2467,8 @@
 
     /* ─────────── MOBILE OVERRIDES ─────────── */
     @media (max-width: 768px) {
-      .hero { padding-top: var(--s-6); padding-bottom: var(--s-6); }
+      .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+      .hero { padding-top: var(--s-5); padding-bottom: var(--s-5); }
       .hero__grid { gap: var(--s-4); }
       .hero__mockup { display: none; }
       .hero-stage { max-width: 300px; aspect-ratio: auto; }
@@ -2476,10 +2477,11 @@
       .hero-badge { display: none; }
       .phone-wrap__ball, .phone-wrap__whistle { display: none; }
       .pass-trails { display: none; }
-      .matchday { display: none; }
+      .matchday { display: none !important; }
       h1 { font-size: 2rem; line-height: 1.15; }
       h2 { font-size: 1.5rem; }
       .hero__sub { font-size: 15px; }
+      section { padding: var(--s-7) 0; }
     }
     @media (max-width: 600px) {
       .form { padding: var(--s-5); }
