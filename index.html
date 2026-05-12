@@ -1291,7 +1291,7 @@
 
     /* ─── Logo bar mejorada ─── */
     .logo-bar {
-      padding: var(--s-8) 0;
+      padding: var(--s-5) 0;
       background: rgba(5, 6, 13, 0.3);
       border-top: 1px solid rgba(255,255,255,0.06);
       border-bottom: 1px solid rgba(255,255,255,0.06);
@@ -1337,7 +1337,7 @@
 
     /* ─── Testimonial block ─── */
     .testimonial {
-      padding: var(--s-10) 0;
+      padding: var(--s-7) 0;
     }
     .testimonial__inner {
       max-width: 900px;
@@ -2176,7 +2176,7 @@
 
     /* ——— Chant marquee ——— */
     .chant {
-      padding: var(--s-6) 0;
+      padding: var(--s-4) 0;
       border-top: 1px solid rgba(255,255,255,0.06);
       border-bottom: 1px solid rgba(255,255,255,0.06);
       background: linear-gradient(180deg, rgba(5,6,13,0.6), rgba(5,6,13,0.2));
@@ -2470,13 +2470,13 @@
       .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
       .hero { padding-top: var(--s-5); padding-bottom: var(--s-5); }
       .hero__grid { gap: var(--s-4); }
-      .hero__mockup { display: none; }
+      .hero__mockup { max-width: 300px; margin: 0 auto; }
       .hero-stage { max-width: 300px; aspect-ratio: auto; }
       .hero-stage__ring, .hero-stage__orbit { display: none; }
       .orbit-chip { display: none; }
       .hero-badge { display: none; }
       .phone-wrap__ball, .phone-wrap__whistle { display: none; }
-      .pass-trails { display: none; }
+      .pass-trails { max-width: 300px; }
       .matchday { display: none !important; }
       .chant { display: none !important; }
       h1 { font-size: 2rem; line-height: 1.15; }
@@ -3346,7 +3346,7 @@
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
-    document.querySelectorAll('section .reveal, .footer .reveal').forEach(el => revealObs.observe(el));
+    document.querySelectorAll('section .reveal, .footer .reveal, .logo-bar .reveal').forEach(el => revealObs.observe(el));
 
     // ─────── Count-up metrics ───────
     function animateCount(el) {
