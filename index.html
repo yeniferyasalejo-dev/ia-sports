@@ -2466,17 +2466,24 @@
     }
 
     /* ─────────── MOBILE OVERRIDES ─────────── */
-    @media (max-width: 600px) {
-      .hero-stage { max-width: 280px; }
+    @media (max-width: 768px) {
+      .hero { padding-top: var(--s-6); padding-bottom: var(--s-6); }
+      .hero__grid { gap: var(--s-5); }
+      .hero-stage { max-width: 300px; aspect-ratio: auto; }
+      .hero-stage__ring, .hero-stage__orbit { display: none; }
       .orbit-chip { display: none; }
       .hero-badge { display: none; }
       .phone-wrap__ball, .phone-wrap__whistle { display: none; }
+      .matchday { display: none; }
+      h1 { font-size: 2rem; line-height: 1.15; }
+      h2 { font-size: 1.5rem; }
+      .hero__sub { font-size: 15px; }
+    }
+    @media (max-width: 600px) {
       .form { padding: var(--s-5); }
       .pill { min-width: 0; }
       .roles__list strong { min-width: auto; }
-      .matchday { display: none; }
-      h1 { font-size: 2rem; }
-      h2 { font-size: 1.6rem; }
+      h1 { font-size: 1.7rem; }
     }
 
   </style>
